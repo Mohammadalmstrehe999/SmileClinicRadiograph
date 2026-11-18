@@ -760,7 +760,7 @@ fun RadiographMeasureScreen(
                         if (!isInsideImage(imgPt)) return@detectTapGestures
 
                         if (mode == MeasureMode.CALIBRATE) {
-                            val updated = calib.plus(imgPt)
+                            val updated = calib.toMutableList().apply { add(imgPt) }
                             if (updated.size == 2) {
                                 calib = updated
                                 pendingCalibPx = updated[0].distanceTo(updated[1])
@@ -789,7 +789,7 @@ fun RadiographMeasureScreen(
                             if (hitPath != null) {
                                 selectedIndex = hitPath
                             } else {
-                                current = current.plus(imgPt)
+                                current = current.toMutableList().apply { add(imgPt) }
                                 selectedIndex = -1
                             }
                         }
