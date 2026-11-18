@@ -253,7 +253,7 @@ object RadiographLoader {
                 group == 0x0028 && element == 0x0103 -> pixelRepresentation = buf.getShort(pos).toInt() and 0xFFFF
                 group == 0x0028 && element == 0x0030 -> {
                     val str = String(bytes, pos, length, Charsets.US_ASCII).trim().trimEnd('\u0000')
-                    val parts = str.split("\\")
+                    val parts = str.split("\\\\")
                     if (parts.size >= 2) {
                         val rowSp = parts[0].trim().toFloatOrNull()
                         val colSp = parts[1].trim().toFloatOrNull()
@@ -760,7 +760,7 @@ fun RadiographMeasureScreen(
                         if (!isInsideImage(imgPt)) return@detectTapGestures
 
                         if (mode == MeasureMode.CALIBRATE) {
-                            val updated = calib + imgPt
+                            val updated = calib.plus(imgPt)
                             if (updated.size == 2) {
                                 calib = updated
                                 pendingCalibPx = updated[0].distanceTo(updated[1])
@@ -789,7 +789,7 @@ fun RadiographMeasureScreen(
                             if (hitPath != null) {
                                 selectedIndex = hitPath
                             } else {
-                                current = current + imgPt
+                                current = current.plus(imgPt)
                                 selectedIndex = -1
                             }
                         }
