@@ -553,13 +553,15 @@ fun RadiographMeasureScreen(
     }
 
     // إيماءات التكبير والتحريك بإصبعين (Pinch-to-Zoom & Pan)
-    val transformState = rememberTransformableState { zoomChange, panChange, centroid ->
+    val transformState = rememberTransformableState { zoomChange: Float, panChange: Offset, centroid: Offset ->
         if (bitmap == null) return@rememberTransformableState
         val newZoom = (zoom * zoomChange).coerceIn(minZoom, maxZoom)
         val factor = newZoom / zoom
+        val cx = centroid.x
+        val cy = centroid.y
         pan = Offset(
-            x = centroid.x - (centroid.x - pan.x) * factor + panChange.x,
-            y = centroid.y - (centroid.y - pan.y) * factor + panChange.y
+            x = cx - (cx - pan.x) * factor + panChange.x,
+            y = cy - (cy - pan.y) * factor + panChange.y
         )
         zoom = newZoom
     }
