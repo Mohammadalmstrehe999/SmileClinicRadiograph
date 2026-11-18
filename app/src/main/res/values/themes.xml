@@ -1,0 +1,3 @@
+<resources>
+    <style name="Theme.SmileClinicRadiograph" parent="android:Theme.Material.NoActionBar" />
+</resources>
